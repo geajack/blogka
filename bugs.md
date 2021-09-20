@@ -1,1 +1,8 @@
-Catch FileNotFound when loading article and return 404
+- Make things look nice
+- Generate/handle slugs correctly
+- Generate proper markdown
+- Catch FileNotFound when loading article and return 404
+- Get it working as a WSGI app, run it with gunicorn
+- Allow setting articles directory in config file
+- Allow setting style directory in config file
+- Allow setting template directory in config file
