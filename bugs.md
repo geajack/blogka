@@ -1,0 +1,1 @@
+Catch FileNotFound when loading article and return 404
