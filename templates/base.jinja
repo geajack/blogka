@@ -1,0 +1,25 @@
+<html>
+
+<head>
+    <title>Blogka</title>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config(
+            {
+                elements: document.querySelectorAll(".article"),
+                tex2jax: {
+                    inlineMath: [['$','$']],
+                    processEscapes: true
+                }
+            }
+        );
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>        
+</head>
+
+<body>
+<a class="title" href="/">Blogka</a>
+{% block body %}
+{% endblock %}
+<body>
+
+</html>
