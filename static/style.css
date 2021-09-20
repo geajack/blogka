@@ -1,0 +1,54 @@
+:root
+{
+    background-color: white;
+    padding: 0px 25px;
+    font-family: 'Noto Serif', serif;
+}
+
+body
+{
+    max-width: 900px;
+    margin: auto;
+    padding-bottom: 50px;    
+}
+
+.blog-title
+{
+    font-size: 35pt;
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+    display: inline-block;
+    text-decoration: none;
+    margin-bottom: 25px;
+}
+
+.index
+{
+}
+
+a.article
+{
+    display: block;
+    text-decoration: none;
+    color: unset;
+    border: 1px solid #666;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+a.article:hover
+{
+    background-color: black;
+    color: white;
+}
+
+main.article
+{
+
+}
+
+main.article *:first-child
+{
+    margin-top: 0px;
+}

@@ -1,12 +1,10 @@
 {% extends "base.jinja" %}
 
 {% block body %}
-<div>
+<div class="index">
     {% for slug in articles %}
-        <a href="/{{slug}}">
-            <div class="article">
-                {{slug}}
-            </div>
+        <a href="/{{slug}}" class="article">
+            {{slug}}
         </a>
     {% endfor %}
 </div>
