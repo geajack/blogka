@@ -1,2 +1,0 @@
-- Allow setting blog title
-- Allow setting stylesheet in config file

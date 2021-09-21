@@ -63,6 +63,10 @@ def error(exception):
         blog_title=get_blog_title()
     ), 404
 
+@application.route("/style.css")
+def stylesheet():
+    path = os.environ.get("BLOGKA_STYLESHEET", "static/style.css")
+    return flask.send_file(path)
 
 @application.route("/")
 @application.route("/<int:page_number>")
