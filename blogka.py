@@ -1,16 +1,12 @@
 import flask
-import markdown
-import pathlib
 import os
-from os import listdir, walk
-from pathlib import Path
-from dataclasses import dataclass
-from urllib.parse import urljoin
+from   pathlib import Path
+from   urllib.parse import urljoin
+import markdown
+from   markdown.inlinepatterns import InlineProcessor, LinkInlineProcessor, ImageInlineProcessor, LINK_RE, IMAGE_LINK_RE
+from   markdown.extensions import Extension
 
-from markdown.inlinepatterns import InlineProcessor, LinkInlineProcessor, ImageInlineProcessor, LINK_RE, IMAGE_LINK_RE
-from markdown.extensions import Extension
-
-class AnchorProcessor(InlineProcessor):
+class SnippetLinkProcessor(InlineProcessor):
     def __init__(self, pattern, md):
         super().__init__(pattern, md)
         self.link_processor = LinkInlineProcessor(pattern, md)
@@ -19,7 +15,7 @@ class AnchorProcessor(InlineProcessor):
         tag, start, end = self.link_processor.handleMatch(m, data)
         return tag.text, start, end
 
-class ImageProcessor(InlineProcessor):
+class SnippetImageProcessor(InlineProcessor):
     def __init__(self, pattern, md):
         super().__init__(pattern, md)
         self.image_processor = ImageInlineProcessor(pattern, md)
@@ -31,22 +27,13 @@ class ImageProcessor(InlineProcessor):
         tag.attrib["src"] = url
         return tag, start, end
 
-class IndexMarkdownExtension(Extension):
+class SnippetRenderer(Extension):
+
     def extendMarkdown(self, md):
         md.inlinePatterns.deregister("link")
         md.inlinePatterns.deregister("image_link")
-        md.inlinePatterns.register(AnchorProcessor(LINK_RE, md), "no-link", 160)
-        md.inlinePatterns.register(ImageProcessor(IMAGE_LINK_RE, md), "image-link", 150)
-
-
-@dataclass
-class ArticleSnippet:
-    content: str
-    slug: str
-
-def render(raw):
-    html = markdown.markdown(raw, extensions=[IndexMarkdownExtension(), "mdx_math"])
-    return html
+        md.inlinePatterns.register(SnippetLinkProcessor(LINK_RE, md), "no-link", 160)
+        md.inlinePatterns.register(SnippetImageProcessor(IMAGE_LINK_RE, md), "image-link", 150)
 
 
 def get_blog_title():
@@ -57,10 +44,15 @@ def get_articles_directory():
     return Path(os.environ.get("BLOGKA_ARTICLES_DIRECTORY", "."))
 
 
+def get_stylesheet():
+    return os.environ.get("BLOGKA_STYLESHEET", "static/style.css")
+
+
 application = flask.Flask("blogka")
 
 @application.errorhandler(Exception)
 def error(exception):
+    print(exception)
     return flask.render_template(
         "error.jinja",
         error_code=500,
@@ -71,6 +63,7 @@ def error(exception):
 
 @application.errorhandler(FileNotFoundError)
 def error(exception):
+    print(exception)
     return flask.render_template(
         "error.jinja",
         error_code=404,
@@ -80,7 +73,7 @@ def error(exception):
 
 @application.route("/style.css")
 def stylesheet():
-    path = os.environ.get("BLOGKA_STYLESHEET", "static/style.css")
+    path = get_stylesheet()
     return flask.send_file(path)
 
 @application.route("/")
@@ -102,11 +95,10 @@ def index(page_number=1):
 
     articles = []
     for filepath in filepaths:
-        slug = filepath.name
+        filename = filepath.name
         with open(filepath, "r") as article_file:
-            content = markdown.markdown(article_file.read(), extensions=[IndexMarkdownExtension(), "mdx_math"])
-        snippet = ArticleSnippet(content, slug)
-        articles.append(snippet)
+            content = markdown.markdown(article_file.read(), extensions=[SnippetRenderer(), "mdx_math"])
+        articles.append((content, filename))
 
     return flask.render_template(
         "index.jinja",

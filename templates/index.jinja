@@ -2,9 +2,9 @@
 
 {% block body %}
 <main class="index">
-    {% for article in articles %}
-        <a href="/articles/{{article.slug}}" class="article">
-            {{article.content}}
+    {% for content, filename in articles %}
+        <a href="/articles/{{filename}}" class="article">
+            {{content}}
         </a>
     {% endfor %}
 </main>
