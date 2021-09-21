@@ -54,9 +54,20 @@ def error(exception):
 
 
 @application.route("/")
-def index():
+@application.route("/<int:page_number>")
+def index(page_number=1):
     _, _, filenames = next(walk("articles"))
     filenames.sort(key=lambda filename: -os.path.getctime("articles/" + filename))
+
+    articles_per_page = 10
+    start_index = articles_per_page * (page_number - 1)
+    
+    n_pages = len(filenames) // 10
+    if len(filenames) % 10 > 0:
+        n_pages += 1
+
+    filenames = filenames[start_index:start_index + articles_per_page]
+
     articles = []
     for filename in filenames:
         path = "articles/" + filename
@@ -67,10 +78,12 @@ def index():
         articles.append(snippet)
     return flask.render_template(
         "index.jinja",
-        articles=articles
+        articles=articles,
+        page_number=page_number,
+        n_pages=n_pages
     )
 
-@application.route("/<slug>")
+@application.route("/articles/<slug>")
 def article(slug=None):
     filename = filename_from_slug(slug)
     path = "articles/" + filename

@@ -3,9 +3,21 @@
 {% block body %}
 <div class="index">
     {% for article in articles %}
-        <a href="/{{article.slug}}" class="article">
+        <a href="/articles/{{article.slug}}" class="article">
             {{article.content}}
         </a>
     {% endfor %}
 </div>
+<footer>
+    {% if page_number > 1 %}
+    <a href="/1">&lt;&lt;First</a>
+    <a href="/{{page_number - 1}}">&lt;Previous</a>
+    {% endif %}
+
+    {% if page_number < n_pages %}
+    <a href="/{{page_number + 1}}">Next&gt;</a>
+    <a href="/{{n_pages}}">Last&gt;&gt;</a>
+    {% endif %}
+
+</footer>
 {% endblock body %}

@@ -86,3 +86,13 @@ main.article
     color: unset;
     margin-top: 25px;
 }
+
+footer
+{
+    text-align: center;
+}
+
+footer a
+{
+    color: unset;
+}
