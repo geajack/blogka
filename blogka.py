@@ -34,14 +34,6 @@ def render(raw):
     return html
 
 
-def slug_from_filename(filename):
-    return filename.name
-
-
-def filename_from_slug(slug):
-    return Path(slug)
-
-
 def get_blog_title():
     return os.environ.get("BLOGKA_TITLE", None)
 
@@ -86,7 +78,7 @@ def index(page_number=1):
 
     articles = []
     for filepath in filepaths:
-        slug = slug_from_filename(filepath)
+        slug = filepath.name
         with open(filepath, "r") as article_file:
             content = render(article_file.read())
         snippet = ArticleSnippet(content, slug)
@@ -100,11 +92,10 @@ def index(page_number=1):
         blog_title=get_blog_title()
     )
 
-@application.route("/articles/<slug>")
-def article(slug=None):
-    filename = filename_from_slug(slug)
+@application.route("/articles/<filename>")
+def article(filename=None):
     path = get_articles_directory() / filename
-    if filename.suffix == ".md":
+    if path.suffix == ".md":
         with open(path, "r") as article_file:
             content = article_file.read()
         html = render(content)
