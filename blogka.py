@@ -3,6 +3,7 @@ import markdown
 import pathlib
 import os
 from os import listdir, walk
+from pathlib import Path
 from dataclasses import dataclass
 
 from markdown.inlinepatterns import InlineProcessor, LinkInlineProcessor, LINK_RE
@@ -34,12 +35,16 @@ def render(raw):
 
 
 def slug_from_filename(filename):
-    slug, extension = filename.split(".", 1)
+    slug = filename.stem
     return slug
 
 
 def filename_from_slug(slug):
     return slug + ".md"
+
+
+def get_articles_directory():
+    return Path(os.environ.get("BLOGKA_ARTICLES_DIRECTORY", "."))
 
 
 application = flask.Flask("blogka")
@@ -56,8 +61,9 @@ def error(exception):
 @application.route("/")
 @application.route("/<int:page_number>")
 def index(page_number=1):
-    _, _, filenames = next(walk("articles"))
-    filenames.sort(key=lambda filename: -os.path.getctime("articles/" + filename))
+    directory = get_articles_directory()
+    filenames = list(directory.glob("*.md"))
+    filenames.sort(key=lambda filename: -os.path.getctime(directory / filename))
 
     articles_per_page = 10
     start_index = articles_per_page * (page_number - 1)
@@ -70,7 +76,7 @@ def index(page_number=1):
 
     articles = []
     for filename in filenames:
-        path = "articles/" + filename
+        path = directory / filename
         slug = slug_from_filename(filename)
         with open(path, "r") as article_file:
             content = render(article_file.read())
@@ -86,7 +92,7 @@ def index(page_number=1):
 @application.route("/articles/<slug>")
 def article(slug=None):
     filename = filename_from_slug(slug)
-    path = "articles/" + filename
+    path = get_articles_directory() / filename
     with open(path, "r") as article_file:
         content = article_file.read()
     html = render(content)

@@ -1,3 +1,2 @@
 - Allow setting articles directory in config file
 - Allow setting style directory in config file
-- Allow setting template directory in config file
