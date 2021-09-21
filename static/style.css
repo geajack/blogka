@@ -1,7 +1,7 @@
 :root
 {
-    background-color: black;
-    color: white;
+    background-color: white;
+    color: black;
     padding: 0px 25px;
     font-family: 'Noto Serif', serif;
 }
@@ -28,6 +28,11 @@ body
 {
 }
 
+.article
+{
+    text-align: justify;
+}
+
 a.article
 {
     display: block;
@@ -42,8 +47,8 @@ a.article
 
 a.article:hover
 {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
 }
 
 main.article
@@ -54,4 +59,30 @@ main.article
 .article *:first-child
 {
     margin-top: 0px;
+}
+
+.error
+{
+    text-align: center;
+}
+
+.error-code
+{
+    display: block;
+    font-size: 400px;
+    line-height: 400px;
+}
+
+.error-message
+{
+    display: block;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.error a.home
+{
+    display: block;
+    color: unset;
+    margin-top: 25px;
 }

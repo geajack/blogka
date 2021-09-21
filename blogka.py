@@ -43,6 +43,15 @@ def filename_from_slug(slug):
 
 application = flask.Flask("blogka")
 
+@application.errorhandler(FileNotFoundError)
+def error(exception):
+    return flask.render_template(
+        "error.jinja",
+        error_code=404,
+        error_message="Article not found"
+    ), 404
+
+
 @application.route("/")
 def index():
     filenames = listdir("articles")
