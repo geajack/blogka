@@ -2,9 +2,9 @@
 
 {% block body %}
 <div class="index">
-    {% for slug in articles %}
-        <a href="/{{slug}}" class="article">
-            {{slug}}
+    {% for article in articles %}
+        <a href="/{{article.slug}}" class="article">
+            {{article.content}}
         </a>
     {% endfor %}
 </div>
