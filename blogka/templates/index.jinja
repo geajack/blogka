@@ -3,20 +3,20 @@
 {% block body %}
 <main class="index">
     {% for content, filename in articles %}
-        <a href="/articles/{{filename}}" class="article">
+        <a href="{{url_for("article", filename=filename)}}" class="article">
             {{content}}
         </a>
     {% endfor %}
 </main>
 <footer>
     {% if page_number > 1 %}
-    <a href="/1">&lt;&lt;First</a>
-    <a href="/{{page_number - 1}}">&lt;Previous</a>
+    <a href="{{url_for("index", page_number=1)}}">&lt;&lt;First</a>
+    <a href="{{url_for("index", page_number=page_number - 1)}}">&lt;Previous</a>
     {% endif %}
 
     {% if page_number < n_pages %}
-    <a href="/{{page_number + 1}}">Next&gt;</a>
-    <a href="/{{n_pages}}">Last&gt;&gt;</a>
+    <a href="{{url_for("index", page_number=page_number + 1)}}">Next&gt;</a>
+    <a href="{{url_for("index", page_number=n_pages)}}">Last&gt;&gt;</a>
     {% endif %}
 </footer>
 {% endblock body %}

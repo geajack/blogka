@@ -24,7 +24,7 @@
 
 <body>
 {% if blog_title != none %}
-<a class="blog-title" href="/">{{blog_title}}</a>
+<a class="blog-title" href="{{url_for("index")}}">{{blog_title}}</a>
 {% endif %}
 {% block body %}
 {% endblock %}
