@@ -50,7 +50,7 @@ def get_stylesheet():
 
 application = flask.Flask("blogka")
 
-@application.errorhandler(Exception)
+# @application.errorhandler(Exception)
 def error(exception):
     print(exception)
     return flask.render_template(
