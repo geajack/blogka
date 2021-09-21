@@ -74,6 +74,7 @@ main.article
 {
     margin: auto;
     display: block;
+    max-width: 90%;
 }
 
 .error
