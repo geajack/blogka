@@ -1,6 +1,6 @@
 ## Cobbler
 
-![](jerry.png)
+![](upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Cat_November_2010-1a.jpg/1200px-Cat_November_2010-1a.jpg)
 
 Mix butter (about 115 grams for a typically sized baking dish) and about once to twice the volume of butter in sugar (to taste). Mix it together into a paste. Add flour until the breadcrumb stage (probably about double the volume of butter). Add baking powder, say a generous teaspoonful for a typical baking dish. Add milk until the mixture is spreadable but not pourable, something like the texture of cake frosting. Don't forget to add a pinch of salt.
 

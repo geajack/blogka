@@ -5,8 +5,9 @@ import os
 from os import listdir, walk
 from pathlib import Path
 from dataclasses import dataclass
+from urllib.parse import urljoin
 
-from markdown.inlinepatterns import InlineProcessor, LinkInlineProcessor, LINK_RE
+from markdown.inlinepatterns import InlineProcessor, LinkInlineProcessor, ImageInlineProcessor, LINK_RE, IMAGE_LINK_RE
 from markdown.extensions import Extension
 
 class AnchorProcessor(InlineProcessor):
@@ -18,10 +19,24 @@ class AnchorProcessor(InlineProcessor):
         tag, start, end = self.link_processor.handleMatch(m, data)
         return tag.text, start, end
 
+class ImageProcessor(InlineProcessor):
+    def __init__(self, pattern, md):
+        super().__init__(pattern, md)
+        self.image_processor = ImageInlineProcessor(pattern, md)
+
+    def handleMatch(self, m, data):
+        tag, start, end = self.image_processor.handleMatch(m, data)
+        base_articles_url = urljoin(flask.request.base_url, "/articles/")
+        url = urljoin(base_articles_url, tag.attrib["src"])
+        tag.attrib["src"] = url
+        return tag, start, end
+
 class IndexMarkdownExtension(Extension):
     def extendMarkdown(self, md):
         md.inlinePatterns.deregister("link")
+        md.inlinePatterns.deregister("image_link")
         md.inlinePatterns.register(AnchorProcessor(LINK_RE, md), "no-link", 160)
+        md.inlinePatterns.register(ImageProcessor(IMAGE_LINK_RE, md), "image-link", 150)
 
 
 @dataclass
