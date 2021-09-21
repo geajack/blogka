@@ -20,8 +20,12 @@ body
     padding: 5px;
     display: inline-block;
     text-decoration: none;
-    margin-bottom: 25px;
     color: unset;
+}
+
+main
+{
+    margin-top: 25px;
 }
 
 .index

@@ -43,6 +43,10 @@ def filename_from_slug(slug):
     return slug + ".md"
 
 
+def get_blog_title():
+    return os.environ.get("BLOGKA_TITLE", None)
+
+
 def get_articles_directory():
     return Path(os.environ.get("BLOGKA_ARTICLES_DIRECTORY", "."))
 
@@ -51,10 +55,12 @@ application = flask.Flask("blogka")
 
 @application.errorhandler(FileNotFoundError)
 def error(exception):
+    print(exception)
     return flask.render_template(
         "error.jinja",
         error_code=404,
-        error_message="Article not found"
+        error_message="Article not found",
+        blog_title=get_blog_title()
     ), 404
 
 
@@ -62,31 +68,33 @@ def error(exception):
 @application.route("/<int:page_number>")
 def index(page_number=1):
     directory = get_articles_directory()
-    filenames = list(directory.glob("*.md"))
-    filenames.sort(key=lambda filename: -os.path.getctime(directory / filename))
+    filepaths = list(directory.glob("*.md"))
+    filepaths.sort(key=os.path.getctime)
+    filepaths.reverse()
 
     articles_per_page = 10
     start_index = articles_per_page * (page_number - 1)
     
-    n_pages = len(filenames) // 10
-    if len(filenames) % 10 > 0:
+    n_pages = len(filepaths) // 10
+    if len(filepaths) % 10 > 0:
         n_pages += 1
 
-    filenames = filenames[start_index:start_index + articles_per_page]
+    filepaths = filepaths[start_index:start_index + articles_per_page]
 
     articles = []
-    for filename in filenames:
-        path = directory / filename
-        slug = slug_from_filename(filename)
-        with open(path, "r") as article_file:
+    for filepath in filepaths:
+        slug = slug_from_filename(filepath)
+        with open(filepath, "r") as article_file:
             content = render(article_file.read())
         snippet = ArticleSnippet(content, slug)
         articles.append(snippet)
+
     return flask.render_template(
         "index.jinja",
         articles=articles,
         page_number=page_number,
-        n_pages=n_pages
+        n_pages=n_pages,
+        blog_title=get_blog_title()
     )
 
 @application.route("/articles/<slug>")
@@ -98,7 +106,8 @@ def article(slug=None):
     html = render(content)
     return flask.render_template(
         "article.jinja",
-        content=html
+        content=html,
+        blog_title=get_blog_title()
     )
 
 

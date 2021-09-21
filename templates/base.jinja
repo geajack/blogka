@@ -1,7 +1,11 @@
 <html>
 
 <head>
-    <title>Blogka</title>
+    {% if blog_title != none %}
+    <title>{{blog_title}}</title>
+    {% else %}
+    <title>Blog</title>
+    {% endif %}
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config(
             {
@@ -18,7 +22,9 @@
 </head>
 
 <body>
-<a class="blog-title" href="/">Blogka</a>
+{% if blog_title != none %}
+<a class="blog-title" href="/">{{blog_title}}</a>
+{% endif %}
 {% block body %}
 {% endblock %}
 <body>

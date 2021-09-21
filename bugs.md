@@ -1,2 +1,2 @@
-- Allow setting articles directory in config file
-- Allow setting style directory in config file
+- Allow setting blog title
+- Allow setting stylesheet in config file
