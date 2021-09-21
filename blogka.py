@@ -1,7 +1,8 @@
 import flask
 import markdown
 import pathlib
-from os import listdir
+import os
+from os import listdir, walk
 from dataclasses import dataclass
 
 from markdown.inlinepatterns import InlineProcessor, LinkInlineProcessor, LINK_RE
@@ -54,7 +55,8 @@ def error(exception):
 
 @application.route("/")
 def index():
-    filenames = listdir("articles")
+    _, _, filenames = next(walk("articles"))
+    filenames.sort(key=lambda filename: -os.path.getctime("articles/" + filename))
     articles = []
     for filename in filenames:
         path = "articles/" + filename
