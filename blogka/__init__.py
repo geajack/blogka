@@ -13,7 +13,11 @@ class SnippetLinkProcessor(InlineProcessor):
 
     def handleMatch(self, m, data):
         tag, start, end = self.link_processor.handleMatch(m, data)
-        return tag.text, start, end
+        if tag is not None:
+            text = tag.text
+        else:
+            text = ""
+        return text, start, end
 
 class SnippetImageProcessor(InlineProcessor):
     def __init__(self, pattern, md):
@@ -97,7 +101,7 @@ def index(page_number=1):
     for filepath in filepaths:
         filename = filepath.name
         with open(filepath, "r") as article_file:
-            content = markdown.markdown(article_file.read(), extensions=[SnippetRenderer(), "mdx_math"])
+            content = markdown.markdown(article_file.read(), extensions=["mdx_math", SnippetRenderer()])
         articles.append((content, filename))
 
     return flask.render_template(
