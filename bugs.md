@@ -1,2 +1,0 @@
-- images don't show up on index page
-- no links in articles

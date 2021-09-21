@@ -59,9 +59,18 @@ def get_articles_directory():
 
 application = flask.Flask("blogka")
 
+@application.errorhandler(Exception)
+def error(exception):
+    return flask.render_template(
+        "error.jinja",
+        error_code=500,
+        error_message="Internal error",
+        blog_title=get_blog_title()
+    ), 500
+
+
 @application.errorhandler(FileNotFoundError)
 def error(exception):
-    print(exception)
     return flask.render_template(
         "error.jinja",
         error_code=404,
@@ -109,7 +118,11 @@ def index(page_number=1):
 
 @application.route("/articles/<filename>")
 def article(filename=None):
-    path = get_articles_directory() / filename
+    directory = get_articles_directory()
+    path = directory / filename
+    
+    assert path.parent.resolve() == directory.resolve()
+
     if path.suffix == ".md":
         with open(path, "r") as article_file:
             content = article_file.read()
