@@ -10,8 +10,8 @@ setuptools.setup(
     description="Minimalist blogging platform",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/geajack/charlotte",
-    packages=setuptools.find_packages(),
+    url="https://github.com/geajack/blogka",
+    packages=["blogka"],
     include_package_data=True,
     classifiers=[
     ],
