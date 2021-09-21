@@ -1,5 +1,7 @@
 ## Cobbler
 
+![](jerry.png)
+
 Mix butter (about 115 grams for a typically sized baking dish) and about once to twice the volume of butter in sugar (to taste). Mix it together into a paste. Add flour until the breadcrumb stage (probably about double the volume of butter). Add baking powder, say a generous teaspoonful for a typical baking dish. Add milk until the mixture is spreadable but not pourable, something like the texture of cake frosting. Don't forget to add a pinch of salt.
 
 Butter baking dish and fill with chopped fruit. Dust the fruit with sugar and/or spices beforehand if desired. Spread batter over the top.
