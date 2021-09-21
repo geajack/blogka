@@ -35,12 +35,11 @@ def render(raw):
 
 
 def slug_from_filename(filename):
-    slug = filename.stem
-    return slug
+    return filename.name
 
 
 def filename_from_slug(slug):
-    return slug + ".md"
+    return Path(slug)
 
 
 def get_blog_title():
@@ -105,14 +104,17 @@ def index(page_number=1):
 def article(slug=None):
     filename = filename_from_slug(slug)
     path = get_articles_directory() / filename
-    with open(path, "r") as article_file:
-        content = article_file.read()
-    html = render(content)
-    return flask.render_template(
-        "article.jinja",
-        content=html,
-        blog_title=get_blog_title()
-    )
+    if filename.suffix == ".md":
+        with open(path, "r") as article_file:
+            content = article_file.read()
+        html = render(content)
+        return flask.render_template(
+            "article.jinja",
+            content=html,
+            blog_title=get_blog_title()
+        )
+    else:
+        return flask.send_file(str(path), attachment_filename=str(filename))
 
 
 if __name__ == "__main__":
