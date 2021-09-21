@@ -6,6 +6,7 @@
     {% else %}
     <title>Blog</title>
     {% endif %}
+    <link rel="icon" type="image/png" href="/blog/favicon.png"/>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config(
             {
@@ -18,7 +19,7 @@
         );
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>        
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="{{url_for("stylesheet")}}">
 </head>
 
 <body>

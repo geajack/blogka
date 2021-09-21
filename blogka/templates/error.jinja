@@ -1,8 +1,12 @@
 <html>
 
 <head>
-<title>Blogka</title>
-<link rel="stylesheet" href="/style.css" />
+{% if blog_title != none %}
+<title>{{blog_title}}</title>
+{% else %}
+<title>Blog</title>
+{% endif %}
+<link rel="stylesheet" href="{{url_for("stylesheet")}}">
 </head>
 
 <body>
