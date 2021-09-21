@@ -1,4 +1,3 @@
-- Generate/handle slugs correctly
 - Generate proper markdown
 - Catch FileNotFound when loading article and return 404
 - Get it working as a WSGI app, run it with gunicorn

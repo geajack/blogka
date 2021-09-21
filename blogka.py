@@ -28,7 +28,7 @@ class ArticleSnippet:
     slug: str
 
 def render(raw):
-    html = markdown.markdown(raw, extensions=[IndexMarkdownExtension()])
+    html = markdown.markdown(raw, extensions=[IndexMarkdownExtension(), "mdx_math"])
     return html
 
 
