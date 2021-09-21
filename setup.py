@@ -12,6 +12,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/geajack/blogka",
     packages=["blogka"],
+    package_data={
+        "blogka": ["static/*", "templates/*"]
+    },
     include_package_data=True,
     classifiers=[
     ],
