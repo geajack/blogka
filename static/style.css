@@ -13,6 +13,11 @@ body
     padding-bottom: 50px;
 }
 
+a
+{
+    color: unset;
+}
+
 .blog-title
 {
     font-size: 35pt;
@@ -100,9 +105,4 @@ main.article
 footer
 {
     text-align: center;
-}
-
-footer a
-{
-    color: unset;
 }

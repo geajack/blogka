@@ -80,7 +80,7 @@ def index(page_number=1):
     for filepath in filepaths:
         slug = filepath.name
         with open(filepath, "r") as article_file:
-            content = render(article_file.read())
+            content = markdown.markdown(article_file.read(), extensions=[IndexMarkdownExtension(), "mdx_math"])
         snippet = ArticleSnippet(content, slug)
         articles.append(snippet)
 
@@ -98,7 +98,7 @@ def article(filename=None):
     if path.suffix == ".md":
         with open(path, "r") as article_file:
             content = article_file.read()
-        html = render(content)
+        html = markdown.markdown(content, extensions=["mdx_math"])
         return flask.render_template(
             "article.jinja",
             content=html,
