@@ -129,4 +129,4 @@ def article(filename=None):
             blog_title=get_blog_title()
         )
     else:
-        return flask.send_file(str(path), attachment_filename=str(filename))
+        return flask.send_file(str(path.resolve()), attachment_filename=str(filename))

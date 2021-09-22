@@ -8,7 +8,7 @@
             "name": "Debug",
             "type": "python",
             "request": "launch",
-            "program": "blogka/__init__.py",
+            "program": "blogka/__main__.py",
             "console": "integratedTerminal",
             "env": {
                 "BLOGKA_ARTICLES_DIRECTORY": "articles"
