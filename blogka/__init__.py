@@ -130,7 +130,3 @@ def article(filename=None):
         )
     else:
         return flask.send_file(str(path), attachment_filename=str(filename))
-
-
-if __name__ == "__main__":
-    application.run(port=8000)
