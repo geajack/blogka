@@ -26,7 +26,7 @@ class SnippetImageProcessor(InlineProcessor):
 
     def handleMatch(self, m, data):
         tag, start, end = self.image_processor.handleMatch(m, data)
-        base_articles_url = urljoin(flask.request.base_url, "/articles/")
+        base_articles_url = urljoin(flask.request.base_url, "articles/")
         url = urljoin(base_articles_url, tag.attrib["src"])
         tag.attrib["src"] = url
         return tag, start, end
